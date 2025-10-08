@@ -1,1 +1,1 @@
-# UVM-SPI-Verification
+# SPI-UVM-Verification
