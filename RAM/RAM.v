@@ -20,14 +20,14 @@ always @(posedge clk) begin
     else                                           
         if (rx_valid) begin
             case (din[9:8])
-                2'b00 : Wr_Addr <= din[7:0];
-                2'b01 : MEM[Wr_Addr] <= din[7:0];
-                2'b10 : Rd_Addr <= din[7:0];
-                2'b11 : dout <= MEM[Wr_Addr];
+                2'b00 : Wr_Addr <= din[7:0]; // wr address
+                2'b01 : MEM[Wr_Addr] <= din[7:0]; // wr data
+                2'b10 : Rd_Addr <= din[7:0]; // rd address 
+                2'b11 : dout <= MEM[Wr_Addr]; // rd data
                 default : dout <= 0;
             endcase
         end
-        tx_valid <= (din[9] && din[8] && rx_valid)? 1'b1 : 1'b0;
+    tx_valid <= (din[9] && din[8] && rx_valid)? 1'b1 : 1'b0;
 end
 
 endmodule
