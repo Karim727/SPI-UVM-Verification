@@ -5,7 +5,7 @@ import uvm_pkg::*;
 
 class RAM_seq_item extends uvm_sequence_item;
   `uvm_object_utils(RAM_seq_item)
-   int din_saved = 5;
+  int din_saved = 5;
   rand logic [9:0] din;
   rand logic rst_n, rx_valid;
   logic [7:0] dout;
@@ -68,14 +68,3 @@ endpackage
 
 
 
-  // function void post_randomize();
-  // // SS_n high every 13 or 23 cycles depending on read/write
-  // if (cs == READ_DATA)
-  //   SS_n = ($urandom_range(0,22) == 0); // once every 23 cycles
-  // else
-  //   SS_n = ($urandom_range(0,12) == 0); // once every 13 cycles
-
-  // // Ensure first 3 bits of MOSI_bits are valid codes
-  // bit [2:0] valid_codes [4] = '{3'b000, 3'b001, 3'b110, 3'b111};
-  // MOSI_bits[10:8] = valid_codes[$urandom_range(0,3)];
-  // endfunction

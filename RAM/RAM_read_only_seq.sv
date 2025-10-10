@@ -12,7 +12,7 @@ class RAM_read_only_seq extends uvm_sequence #(RAM_seq_item);
   endfunction
   task body;
     seq_item = RAM_seq_item::type_id::create("seq_item");
-    repeat(100) begin
+    repeat(RUNS) begin
         start_item(seq_item);
         seq_item.wr_only.constraint_mode(0);
         seq_item.wr_rd_random.constraint_mode(0);

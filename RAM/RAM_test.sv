@@ -50,7 +50,7 @@ class RAM_test extends uvm_test;
   read_only_seq.start(env.agt.sqr);
   `uvm_info("run_phase", "read_only_seq Stimulus Generation Ended", UVM_LOW)
 
-    `uvm_info("run_phase", "write_read_random_seq Stimulus Generation Started", UVM_LOW)
+  `uvm_info("run_phase", "write_read_random_seq Stimulus Generation Started", UVM_LOW)
   write_read_random_seq.start(env.agt.sqr);
   `uvm_info("run_phase", "write_read_random_seq Stimulus Generation Ended", UVM_LOW)
 

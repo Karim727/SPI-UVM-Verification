@@ -13,7 +13,7 @@ property tx_low_p;
   @(posedge clk) disable iff(!rst_n) (din[9:8] != 2'b11) |=> (tx_valid == 0);
 endproperty
 property tx_rise_fall_p;
-  @(posedge clk) disable iff(!rst_n) (din[9:8] == 2'b11)  |=> ($fell(tx_valid)[->1]);
+  @(posedge clk) disable iff(!rst_n) (din[9:8] == 2'b11)  |=> ($fell(tx_valid)[->1]); // NOT SURE??
 endproperty
 
 property wraddr_wrdata_p;
