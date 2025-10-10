@@ -10,9 +10,6 @@ sim:/top/RAMif/rx_valid \
 sim:/top/RAMif/dout \
 sim:/top/RAMif/tx_valid
 
-add wave -position insertpoint  \
-sim:/uvm_root/uvm_test_top/env/sb/correct_count \
-sim:/uvm_root/uvm_test_top/env/sb/error_count
 
 
 #add wave -position insertpoint  \
@@ -25,6 +22,13 @@ sim:/uvm_root/uvm_test_top/env/sb/error_count
 add wave -position insertpoint  \
 sim:/uvm_root/uvm_test_top/env/sb/tx_valid_ref \
 sim:/uvm_root/uvm_test_top/env/sb/dout_ref
+
+add wave -position insertpoint  \
+sim:/uvm_root/uvm_test_top/env/sb/correct_count \
+sim:/uvm_root/uvm_test_top/env/sb/error_count
+
+
+add wave /top/DUT/sva_inst/reset_asrt
 
 coverage save top.ucdb -onexit
 run -all

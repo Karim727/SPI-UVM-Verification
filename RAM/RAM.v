@@ -13,7 +13,7 @@ reg [7:0] Rd_Addr, Wr_Addr;
 always @(posedge clk) begin
     if (~rst_n) begin
         dout <= 0;
-        tx_valid <= 0;
+        //tx_valid <= 0; <- BUG
         Rd_Addr <= 0;
         Wr_Addr <= 0;
     end
@@ -27,7 +27,7 @@ always @(posedge clk) begin
                 default : dout <= 0;
             endcase
         end
-    tx_valid <= (din[9] && din[8] && rx_valid)? 1'b1 : 1'b0;
+    tx_valid <= (din[9] && din[8] && rx_valid && rst_n)? 1'b1 : 1'b0;
 end
 
 endmodule
