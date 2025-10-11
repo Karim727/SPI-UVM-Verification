@@ -7,6 +7,7 @@ module top();
   bit clk;
   initial begin
     $readmemb("mem.dat",DUT.MEM);
+    $readmemb("mem.dat",golden_model.mem);
   end
   initial begin
     forever
@@ -22,7 +23,14 @@ module top();
           .tx_valid(RAMif.tx_valid)
   );
 
-
+  RAM_golden golden_model(
+          .din(RAMif.din),
+          .clk(clk),
+          .rst_n(RAMif.rst_n),
+          .rx_valid(RAMif.rx_valid),
+          .dout(RAMif.dout_ref),
+          .tx_valid(RAMif.tx_valid_ref)
+  );
 
   bind RAM RAM_sva sva_inst (
           .din(RAMif.din),

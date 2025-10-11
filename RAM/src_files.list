@@ -1,5 +1,6 @@
 RAM_shared_pkg.sv
 RAM.v
+../RAM_golden.v
 RAM_if.sv
 RAM_sva.sv
 RAM_config_obj.sv

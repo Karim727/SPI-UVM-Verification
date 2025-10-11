@@ -25,6 +25,8 @@ package RAM_pkg_mon;
                     rsp_seq_item.tx_valid=RAM_vif.tx_valid;
                     rsp_seq_item.rx_valid=RAM_vif.rx_valid;
                     rsp_seq_item.din=RAM_vif.din;
+                    rsp_seq_item.tx_valid_ref=RAM_vif.tx_valid_ref;
+                    rsp_seq_item.dout_ref=RAM_vif.dout_ref;
                 mon_ap.write(rsp_seq_item);
                 `uvm_info("run_phase",rsp_seq_item.convert2string_stimulus(),UVM_HIGH) 
             end
