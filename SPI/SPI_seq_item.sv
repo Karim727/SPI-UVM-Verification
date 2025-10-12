@@ -11,7 +11,8 @@ class SPI_seq_item extends uvm_sequence_item;
   rand logic [7:0] tx_data;
   logic [9:0] rx_data;
   logic rx_valid,MISO;
-  logic [2:0] cs;
+  //logic [2:0] cs;
+  
   function new(string name = "SPI_seq_item");
     super.new(name);
   endfunction
@@ -24,24 +25,40 @@ class SPI_seq_item extends uvm_sequence_item;
     super.convert2string(),rst_n,SS_n,tx_valid,tx_data,MOSI);
   endfunction
   constraint reset {
-    rst_n      dist {1:/97,0:/3};
+    rst_n      dist {1:/98,0:/2};
   }
-  constraint tx__valid iff(cs == READ_DATA) {
-    tx__valid == 1;
-  }
-  constraint mosi {
-    foreach (MOSI_bits[i]) {MOSI=MOSI_bits[i];}
-  }
+  /*constraint tx__valid {
+    (cs == READ_DATA) -> (tx_valid == 1);
+  }*/
+  /*constraint valid_code_c {
+    (SS_n == 0) -> MOSI_bits[10:8] inside {3'b000, 3'b001, 3'b110, 3'b111};
+  }*/
   function void post_randomize();
-  // SS_n high every 13 or 23 cycles depending on read/write
-  if (cs == READ_DATA)
-    SS_n = ($urandom_range(0,22) == 0); // once every 23 cycles
-  else
-    SS_n = ($urandom_range(0,12) == 0); // once every 13 cycles
-
-  // Ensure first 3 bits of MOSI_bits are valid codes
-  bit [2:0] valid_codes [4] = '{3'b000, 3'b001, 3'b110, 3'b111};
-  MOSI_bits[10:8] = valid_codes[$urandom_range(0,3)];
-endfunction
+    bit [2:0] valid_codes [4] = '{3'b000, 3'b001, 3'b110, 3'b111};
+    //SS_n = 0;
+    $display("MOSI_bits=%b at time=%t",MOSI_bits,$time);
+    if (MOSI_bits[10:8] == 3'b111) begin
+      cycles_before_SS_high = 23;
+      tx_valid = 1;
+    end
+    else begin
+      tx_valid = 0;
+      cycles_before_SS_high = 13;
+    end
+    // Ensure first 3 bits of MOSI_bits are valid codes
+    if(~SS_n)
+      MOSI_bits[10:8] = valid_codes[$urandom_range(0,3)];
+  endfunction
 endclass: SPI_seq_item
 endpackage
+
+  // SS_n high every 13 or 23 cycles depending on read/write
+  /*if (cs == READ_DATA) begin
+    tx_valid = 1;
+    //if(rx_valid)
+      //SS_n = 1; // once every 23 cycles
+  end*/
+  /*else begin
+    if(rx_valid)
+      SS_n = 1; // once every 13 cycles
+  end*/

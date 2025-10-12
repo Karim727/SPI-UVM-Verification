@@ -1,31 +1,29 @@
-package RAM_seq_item_pkg;
-import RAM_shared_pkg::*;
+package WRAPPER_seq_item_pkg;
+import WRAPPER_shared_pkg::*;
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 
-class RAM_seq_item extends uvm_sequence_item;
-  `uvm_object_utils(RAM_seq_item)
+class WRAPPER_seq_item extends uvm_sequence_item;
+  `uvm_object_utils(WRAPPER_seq_item)
   int din_saved = 5;
-  rand logic [9:0] din;
-  rand logic rst_n, rx_valid;
-  logic [7:0] dout, dout_ref;
-  logic tx_valid, tx_valid_ref;
-  function new(string name = "RAM_seq_item");
+
+  rand logic MOSI;
+  rand logic rst_n;
+  logic MISO;
+  rand logic SS_n;
+
+  function new(string name = "WRAPPER_seq_item");
     super.new(name);
   endfunction
   function string convert2string();
     return $sformatf("%s", super.convert2string());
   endfunction
   function string convert2string_stimulus();
-    return $sformatf("din = %b, rst_n = %b, rx_valid = %b, dout = %b, tx_valid = %b",
-    din, rst_n, rx_valid, dout, tx_valid);
+    return $sformatf("MISO = %b, MOSI = %b, rst_n = %b, SS_n = %b",
+    MISO, MOSI, rst_n, SS_n);
   endfunction
-  
   constraint reset {
     rst_n      dist {1:/97,0:/3};
-  }
-  constraint rx_valid_c {
-    rx_valid  dist{1:/70,0:/30};
   }
 
   constraint rd_only{
@@ -64,7 +62,7 @@ class RAM_seq_item extends uvm_sequence_item;
   endfunction
 
 
-endclass: RAM_seq_item
+endclass: WRAPPER_seq_item
 endpackage
 
 

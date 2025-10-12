@@ -15,8 +15,8 @@ class SPI_reset_seq extends uvm_sequence #(SPI_seq_item);
     start_item(seq_item);
     seq_item.rst_n=0;
     seq_item.MOSI=0;
-    seq_item.SS_n=0;
-    seq_item.tx__valid=0;
+    seq_item.SS_n=1;
+    seq_item.tx_valid=0;
     seq_item.tx_data=0;
     finish_item(seq_item);
   endtask

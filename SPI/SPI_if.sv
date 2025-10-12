@@ -6,4 +6,6 @@ interface SPI_if (clk);
   logic      [9:0] rx_data;
   logic            rx_valid, MISO;
   logic      [2:0] cs;
+  logic      [9:0] rx_data_exp;
+  logic            rx_valid_exp, MISO_exp;
 endinterface : SPI_if

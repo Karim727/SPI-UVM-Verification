@@ -13,7 +13,7 @@ class SPI_main_seq extends uvm_sequence #(SPI_seq_item);
     seq_item = SPI_seq_item::type_id::create("seq_item");
     repeat(1000) begin
       start_item(seq_item);
-      assert(seq_item.randomize() with rst_n == 1)
+      assert(seq_item.randomize())
       finish_item(seq_item);
     end
   endtask

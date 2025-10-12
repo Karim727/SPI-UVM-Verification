@@ -1,21 +1,20 @@
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 import SPI_test_pkg::*;
-
+import SPI_shared_pkg::*;
 module top();
   // Clock generation
   bit clk;
   initial begin
     forever
-      #1 clk=~clk;
+      #5 clk=~clk;
   end
   // Instantiate the interface and DUT
   SPI_if SPIif (clk);
-  SPI DUT(SPIif.A,SPIif.B,SPIif.cin,SPIif.serial_in,SPIif.red_op_A,SPIif.red_op_B,SPIif.opcode,SPIif.bypass_A,SPIif.bypass_B,
-  SPIif.clk,SPIif.rst,SPIif.direction,SPIif.leds,SPIif.out);
-  //bind SPI SPI_sva sva_inst (SPIif.A,SPIif.B,SPIif.cin,SPIif.serial_in,SPIif.red_op_A,SPIif.red_op_B,SPIif.opcode,SPIif.bypass_A,SPIif.bypass_B,
-  //SPIif.clk,SPIif.rst,SPIif.direction,SPIif.leds,SPIif.out);
-  assign SPIif.cs = DUT.cs;
+  SLAVE DUT(SPIif.MOSI,SPIif.MISO,SPIif.SS_n,SPIif.clk,SPIif.rst_n,SPIif.rx_data,SPIif.rx_valid,SPIif.tx_data,SPIif.tx_valid);
+  SPI golden_model(SPIif.MOSI,SPIif.SS_n,SPIif.clk,SPIif.rst_n,SPIif.tx_data,SPIif.tx_valid,
+  SPIif.MISO_exp,SPIif.rx_data_exp,SPIif.rx_valid_exp);
+  assign SPIif.cs = cs;
   initial begin
     uvm_config_db #(virtual SPI_if)::set(null,"uvm_test_top","SPI_IF",SPIif);//name
     run_test("SPI_test");

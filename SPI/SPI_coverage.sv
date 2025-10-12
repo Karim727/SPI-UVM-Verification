@@ -10,11 +10,9 @@ package SPI_pkg_cover;
         SPI_seq_item seq_item_cov;
         covergroup cvr_grp;
             rx_data_cp: coverpoint seq_item_cov.rx_data[9:8];
-            SS_n_cp: coverpoint seq_item_cov.SS_n{
-                if(seq_item_cov.cs == READ_DATA)
-                    bins extended_transaction[] = (1=>0[*23]=>1);
-                else
-                    bins full_transaction_normal[] = (1=>0[*13]=>1);
+            SS_n_cp: coverpoint seq_item_cov.SS_n {
+                bins extended_transaction[] = (1 => 0[*23] => 1);
+                bins full_transaction_normal[] = (1 => 0[*13] => 1);
             }
             MOSI_cp: coverpoint seq_item_cov.MOSI {
                 bins write_addr = (0=>0=>0);

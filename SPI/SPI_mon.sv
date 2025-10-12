@@ -19,14 +19,17 @@ package SPI_pkg_mon;
             super.run_phase(phase);
             forever begin
                 rsp_seq_item = SPI_seq_item::type_id::create("rsp_seq_item");
-                for (int i = 10; i >= 0; i--) begin
+                //for (int i = 10; i >= 0; i--) begin
                     @(negedge SPI_vif.clk);
-                    rsp_seq_item.MOSI_bits[i]=SPI_vif.MOSI;
+                    rsp_seq_item.MOSI=SPI_vif.MOSI;
                     rsp_seq_item.rst_n=SPI_vif.rst_n;
                     rsp_seq_item.SS_n=SPI_vif.SS_n;
-                    rsp_seq_item.tx__valid=SPI_vif.tx__valid;
+                    rsp_seq_item.tx_valid=SPI_vif.tx_valid;
                     rsp_seq_item.tx_data=SPI_vif.tx_data;
-                end
+                    rsp_seq_item.rx_data=SPI_vif.rx_data;
+                    rsp_seq_item.rx_valid=SPI_vif.rx_valid;
+                    rsp_seq_item.MISO=SPI_vif.MISO;
+                //end
                 mon_ap.write(rsp_seq_item);
                 `uvm_info("run_phase",rsp_seq_item.convert2string_stimulus(),UVM_HIGH) 
             end
