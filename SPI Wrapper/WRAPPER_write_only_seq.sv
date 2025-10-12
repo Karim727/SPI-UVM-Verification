@@ -20,8 +20,7 @@ class WRAPPER_write_only_seq extends uvm_sequence #(WRAPPER_seq_item);
         start_item(seq_item);
         seq_item.constraint_mode(0);
         seq_item.wr_only.constraint_mode(1);
-        seq_item.res et.constraint_mode(1);
-        seq_item.rx_valid_c.constraint_mode(1);
+        seq_item.reset.constraint_mode(1);
         assert(seq_item.randomize());
         finish_item(seq_item);
     end

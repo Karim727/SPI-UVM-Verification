@@ -61,12 +61,12 @@ class WRAPPER_test extends uvm_test;
             end
             uvm_config_db #(WRAPPER_config_obj)::set(this,"*","CFG_wrapper",WRAPPER_cfg);
 
-            if(!uvm_config_db #(virtual RAM_if)::get(this,"","RAM_IF",RAM_cfg.WRAPPER_vif))begin
+            if(!uvm_config_db #(virtual RAM_if)::get(this,"","RAM_IF",RAM_cfg.RAM_vif))begin
                 `uvm_fatal("bulid_phase","unable to get congiguration object")
             end
             uvm_config_db #(RAM_config_obj)::set(this,"*","CFG_ram",RAM_cfg);
 
-            if(!uvm_config_db #(virtual SPI_if)::get(this,"","SPI_IF",SPI_cfg.WRAPPER_vif))begin
+            if(!uvm_config_db #(virtual SPI_if)::get(this,"","SPI_IF",SPI_cfg.SPI_vif))begin
                 `uvm_fatal("bulid_phase","unable to get congiguration object")
             end
             uvm_config_db #(SPI_config_obj)::set(this,"*","CFG_spi",SPI_cfg);

@@ -32,40 +32,22 @@ package WRAPPER_pkg_score;
         endfunction
         task run_phase(uvm_phase phase);
             super.run_phase(phase);
-            //MEM = '{256{8'b0}};
             forever begin
 
                 sb_fifo.get(seq_item_sb);
                 //ref_model(seq_item_sb);
-                if(seq_item_sb.dout_ref != seq_item_sb.dout || seq_item_sb.tx_valid_ref != seq_item_sb.tx_valid) begin
-                    `uvm_error("run_phase",$sformatf("Comparison failed, transactions recieved by the DUT:%s while the 
-                    dout_ref = %0b, tx_valid_ref = %0b",seq_item_sb.convert2string_stimulus(),seq_item_sb.dout_ref,seq_item_sb.tx_valid_ref));
-                    error_count++;
-                end
-                else begin
-                    `uvm_info("run_phase", $sformatf("Correct output:%s",seq_item_sb.convert2string_stimulus()),UVM_HIGH);
-                    correct_count++;
-                end
+                // if(seq_item_sb.dout_ref != seq_item_sb.dout || seq_item_sb.tx_valid_ref != seq_item_sb.tx_valid) begin
+                //     `uvm_error("run_phase",$sformatf("Comparison failed, transactions recieved by the DUT:%s while the 
+                //     dout_ref = %0b, tx_valid_ref = %0b",seq_item_sb.convert2string_stimulus(),seq_item_sb.dout_ref,seq_item_sb.tx_valid_ref));
+                //     error_count++;
+                // end
+                // else begin
+                //     `uvm_info("run_phase", $sformatf("Correct output:%s",seq_item_sb.convert2string_stimulus()),UVM_HIGH);
+                //     correct_count++;
+                // end
             end
         endtask
-        // task ref_model(WRAPPER_seq_item seq_item_chk);
-        //     if (~seq_item_chk.rst_n) begin
-        //         dout_ref = 0;
-        //         Rd_Addr = 0;
-        //         Wr_Addr = 0;
-        //     end
-        //     else                                           
-        //         if (seq_item_chk.rx_valid) begin
-        //             case (seq_item_chk.din[9:8])
-        //                 2'b00 : Wr_Addr = seq_item_chk.din[7:0]; // wr address
-        //                 2'b01 : MEM[Wr_Addr] = seq_item_chk.din[7:0]; // wr data
-        //                 2'b10 : Rd_Addr = seq_item_chk.din[7:0]; // rd address 
-        //                 2'b11 : dout_ref = MEM[Wr_Addr]; // rd data
-        //                 default : dout_ref = 0;
-        //             endcase
-        //         end
-        //     tx_valid_ref = (seq_item_chk.din[9] && seq_item_chk.din[8] && seq_item_chk.rx_valid && seq_item_chk.rst_n)? 1'b1 : 1'b0;
-        // endtask
+        
         function void report_phase(uvm_phase phase);
             super.report_phase(phase);
             `uvm_info("report_phase",$sformatf("Total successful transactions: %0d",correct_count),UVM_MEDIUM);

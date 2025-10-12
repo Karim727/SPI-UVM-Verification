@@ -6,11 +6,15 @@ import uvm_pkg::*;
 class WRAPPER_seq_item extends uvm_sequence_item;
   `uvm_object_utils(WRAPPER_seq_item)
   int din_saved = 5;
+  // bit [9:0] din1;
+  // bit [9:0] din2 = 5;
 
-  rand logic MOSI;
+  int count = 0;
+  logic MOSI;
   rand logic rst_n;
   logic MISO;
   rand logic SS_n;
+  rand logic[9:0] din;
 
   function new(string name = "WRAPPER_seq_item");
     super.new(name);
@@ -27,20 +31,25 @@ class WRAPPER_seq_item extends uvm_sequence_item;
   }
 
   constraint rd_only{
+    if(count == 0){
     if(din_saved == 2'b10)
     din[9:8] inside {2'b10, 2'b11};
     else 
     din[9:8] == 2'b10;
+    }
   }
 
   constraint wr_only{
+    if(count == 0){
     if(din_saved == 2'b00)
     din[9:8] inside {2'b00, 2'b01};
     else 
     din[9:8] == 2'b00;
+    }
   }
 
   constraint wr_rd_random {
+    if(count == 0){
     if (din_saved == 2'b00) {
       din[9:8] inside {2'b00, 2'b01};
     } else if (din_saved == 2'b01) {
@@ -51,10 +60,24 @@ class WRAPPER_seq_item extends uvm_sequence_item;
       din[9:8] dist {2'b10 := 40, 2'b00 := 60};
     } else {
       din[9:8] == 2'b00;
-  }
+    } 
+    }
 }
+
+
+
+
   function void post_randomize(); // Happens after randomization
     din_saved = din[9:8];
+    if(count>0) begin
+      MOSI = din[count-1];
+      count--;
+    end
+    else begin
+      count = 10;
+      
+    end
+
     //$display("DIN = %b, din_saved = %d", din[9:8], din_saved);
   endfunction
   function void pre_randomize();
@@ -66,4 +89,45 @@ endclass: WRAPPER_seq_item
 endpackage
 
 
+
+
+
+
+
+  // constraint rd_only{
+    // if(din1[9:8] == 2'b10)
+    // din[9:8] inside {2'b10, 2'b11};
+    // else
+    // din[9:8] == 2'b10;
+    // if(din2[9:8] == 2'b10 && count == 0)
+    //   MOSI == 1;
+    // else if(din2[9:8] == 2'b10 && count == 1)
+    //   MOSI inside {1'b0, 1'b1};
+    // else if(din2 == 5)
+    //   MOSI == 1;
+
+  // }
+
+  // constraint wr_rd_random {
+  //   if (din2[9:8] == 2'b00 && count == 0) {
+  //     din[9:8] inside {2'b00, 2'b01};
+  //   } else if (din_saved == 2'b01) {
+  //     din[9:8] dist {2'b10 := 60, 2'b00 := 40};
+  //   } else if (din_saved == 2'b10) {
+  //     din[9:8] inside {2'b10, 2'b11};
+  //   } else if (din_saved == 2'b11) {
+  //     din[9:8] dist {2'b10 := 40, 2'b00 := 60};
+  //   } else {
+  //     din[9:8] == 2'b00;
+  // }
+// }
+
+
+
+//   constraint wr_only{
+//     if(din_saved == 2'b00)
+//     din[9:8] inside {2'b00, 2'b01};
+//     else 
+//     din[9:8] == 2'b00;
+//   }
 

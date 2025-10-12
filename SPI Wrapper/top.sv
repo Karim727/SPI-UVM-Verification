@@ -1,14 +1,15 @@
 import uvm_pkg::*;
 `include "uvm_macros.svh"
-import RAM_test_pkg::*;
-import SPI_test_pkg::*;
+// import RAM_test_pkg::*;
+// import SPI_test_pkg::*;
+import WRAPPER_test_pkg::*;
 import SPI_shared_pkg::*;
 
 module top ();
   bit clk;
   initial begin
-    $readmemb("../RAM/mem.dat", DUT.MEM);
-    $readmemb("../RAM/mem.dat", golden_model.mem);
+    $readmemb("../RAM/mem.dat", DUT.RAM_instance.MEM);
+    $readmemb("../RAM/mem.dat", golden_model_ram.mem);
   end
   initial begin
     forever #5 clk = ~clk;
@@ -19,7 +20,7 @@ module top ();
   // RAM //
   /////////
   RAM_if RAMif (clk);
-  RAM_golden golden_model (
+  RAM_golden golden_model_ram (
       .din(RAMif.din),
       .clk(clk),
       .rst_n(RAMif.rst_n),
@@ -40,7 +41,7 @@ module top ();
   /////////
 
   SPI_if SPIif (clk);
-  SPI golden_model (
+  SPI golden_model_spi (
       SPIif.MOSI,
       SPIif.SS_n,
       SPIif.clk,
@@ -60,7 +61,7 @@ module top ();
   WRAPPER DUT (
       .MOSI(WRAPPERif.MOSI),
       .MISO(WRAPPERif.MISO),
-      .SS_n(RAPPERif.SS_n),
+      .SS_n(WRAPPERif.SS_n),
       .clk(clk),
       .rst_n(WRAPPERif.rst_n)
   );
@@ -72,21 +73,24 @@ module top ();
     assign RAMif.rx_valid = DUT.rx_valid;
     assign RAMif.rst_n = DUT.rst_n;
     assign RAMif.tx_valid = DUT.tx_valid;
-    assign RAMif.dout = DUT.tx_data_out;
+    assign RAMif.dout = DUT.tx_data_dout;
 
     assign SPIif.MOSI = DUT.MOSI;
     assign SPIif.MISO = DUT.MISO;
     assign SPIif.rst_n = DUT.rst_n;
     assign SPIif.SS_n = DUT.SS_n;
-    assign SPIif.dout = DUT.tx_data_out;
 
+    // assign WRAPPERif.rx_data_din = DUT.rx_data_din;
+    // assign WRAPPERif.rx_valid = DUT.rx_valid;
+    // assign WRAPPERif.tx_valid = DUT.tx_valid;
+    // assign WRAPPERif.tx_data_dout = DUT.tx_data_dout;
 
 
   initial begin
     uvm_config_db#(virtual RAM_if)::set(null, "uvm_test_top", "RAM_IF", RAMif);
     uvm_config_db#(virtual SPI_if)::set(null, "uvm_test_top", "SPI_IF", SPIif);
     uvm_config_db#(virtual WRAPPER_if)::set(null, "uvm_test_top", "WRAPPER_IF", WRAPPERif);
-    run_test("Wrapper_test");
+    run_test("WRAPPER_test");
   end
 endmodule
 

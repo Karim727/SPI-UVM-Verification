@@ -31,7 +31,7 @@ package WRAPPER_pkg_agent;
         endfunction
         function void connect_phase(uvm_phase phase);
             super.connect_phase(phase);
-            if(ALSU_cfg.is_active == UVM_ACTIVE) begin
+            if(WRAPPER_cfg.is_active == UVM_ACTIVE) begin
 
                 drv.WRAPPER_vif = WRAPPER_cfg.WRAPPER_vif;
                 drv.seq_item_port.connect(sqr.seq_item_export);

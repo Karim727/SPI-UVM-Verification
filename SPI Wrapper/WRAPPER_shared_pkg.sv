@@ -1,3 +1,3 @@
 package WRAPPER_shared_pkg;
-    paWRAPPEReter RUNS = 1000;
+    parameter RUNS = 1000;
 endpackage

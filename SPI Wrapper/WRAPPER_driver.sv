@@ -14,9 +14,9 @@ package WRAPPER_driver_pkg;
             forever begin
                 stim_seq_item = WRAPPER_seq_item::type_id::create("stim_seq_item");
                 seq_item_port.get_next_item(stim_seq_item);
-                WRAPPER_vif.din=stim_seq_item.din;
+                WRAPPER_vif.MOSI=stim_seq_item.MOSI;
                 WRAPPER_vif.rst_n=stim_seq_item.rst_n;
-                WRAPPER_vif.rx_valid=stim_seq_item.rx_valid;
+                WRAPPER_vif.SS_n=stim_seq_item.SS_n;
                 @(negedge WRAPPER_vif.clk);
                 seq_item_port.item_done();
                 `uvm_info("run_phase",stim_seq_item.convert2string_stimulus(),UVM_HIGH) 

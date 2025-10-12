@@ -15,7 +15,7 @@ class WRAPPER_reset_seq extends uvm_sequence #(WRAPPER_seq_item);
     seq_item = WRAPPER_seq_item::type_id::create("seq_item");
     start_item(seq_item);
     seq_item.din = 0;
-    seq_item.rx_valid = 0;
+    seq_item.MOSI = 0;
     seq_item.rst_n = 0;
     finish_item(seq_item);
   endtask
