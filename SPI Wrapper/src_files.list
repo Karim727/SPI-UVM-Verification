@@ -2,9 +2,7 @@
 ../SPI/SPI_shared_pkg.sv
 WRAPPER_shared_pkg.sv
 
-../RAM/RAM.v
-../SPI/SPI_slave.sv
-SPI_wrapper.v
+
 
 ../RAM/RAM_golden.v
 ../SPI/SPI.v
@@ -40,8 +38,6 @@ WRAPPER_sequencer.sv
 WRAPPER_agent.sv
 
 
-
-
 ../SPI/SPI_score.sv
 ../RAM/RAM_score.sv
 WRAPPER_score.sv
@@ -61,6 +57,11 @@ WRAPPER_reset_seq.sv
 WRAPPER_write_read_seq.sv
 
 WRAPPER_test.sv
+
+../RAM/RAM.v
+../SPI/SPI_slave.sv
+SPI_wrapper.v
+
 
 top.sv
 

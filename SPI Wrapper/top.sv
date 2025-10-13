@@ -80,10 +80,10 @@ module top ();
     assign SPIif.rst_n = DUT.rst_n;
     assign SPIif.SS_n = DUT.SS_n;
 
-    // assign WRAPPERif.rx_data_din = DUT.rx_data_din;
-    // assign WRAPPERif.rx_valid = DUT.rx_valid;
-    // assign WRAPPERif.tx_valid = DUT.tx_valid;
-    // assign WRAPPERif.tx_data_dout = DUT.tx_data_dout;
+    assign WRAPPERif.rx_data_din = DUT.rx_data_din;
+    assign WRAPPERif.rx_valid = DUT.rx_valid;
+    assign WRAPPERif.tx_valid = DUT.tx_valid;
+    assign WRAPPERif.tx_data_dout = DUT.tx_data_dout;
 
 
   initial begin

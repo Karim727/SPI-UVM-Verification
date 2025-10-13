@@ -132,6 +132,14 @@ always @(posedge clk) begin
         endcase
     end
 end
+
+
+//////////////////////////
+      //ASSERTIONS//
+//////////////////////////
+
+`ifdef SIM
+
 property reset_check; 
     @(posedge clk) disable iff (rst_n)  (~rst_n) |-> ##1 
         (~MISO && ~rx_valid && rx_data == 10'd0);
@@ -179,4 +187,6 @@ ap_5:assert property (valid_transition_4);
 cp_5:cover property (valid_transition_4);
 ap_6:assert property (valid_transition_5);
 cp_6:cover property (valid_transition_5);
+`endif
+
 endmodule

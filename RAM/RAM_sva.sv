@@ -32,7 +32,7 @@ tx_low_asrt: assert property(tx_low_p);
 tx_low_cov: cover property(tx_low_p);
 
 tx_rise_fall_asrt: assert property(tx_rise_fall_p);
-tx_rise_fall_cove: cover property(tx_rise_fall_p);
+tx_rise_fall_cov: cover property(tx_rise_fall_p);
 
 wraddr_wrdata_asrt: assert property(wraddr_wrdata_p);
 wraddr_wrdata_cov: cover property(wraddr_wrdata_p);

@@ -5,15 +5,13 @@ import uvm_pkg::*;
 
 class WRAPPER_seq_item extends uvm_sequence_item;
   `uvm_object_utils(WRAPPER_seq_item)
-  int din_saved = 5;
-  // bit [9:0] din1;
-  // bit [9:0] din2 = 5;
-
+  bit [9:8] din_saved = 5;
   int count = 0;
+  int count_ss_n = 0;
   logic MOSI;
   rand logic rst_n;
   logic MISO;
-  rand logic SS_n;
+  logic SS_n;
   rand logic[9:0] din;
 
   function new(string name = "WRAPPER_seq_item");
@@ -33,8 +31,8 @@ class WRAPPER_seq_item extends uvm_sequence_item;
   constraint rd_only{
     if(count == 0){
     if(din_saved == 2'b10)
-    din[9:8] inside {2'b10, 2'b11};
-    else 
+    din[9:8] == 2'b11;
+    else
     din[9:8] == 2'b10;
     }
   }
@@ -55,7 +53,7 @@ class WRAPPER_seq_item extends uvm_sequence_item;
     } else if (din_saved == 2'b01) {
       din[9:8] dist {2'b10 := 60, 2'b00 := 40};
     } else if (din_saved == 2'b10) {
-      din[9:8] inside {2'b10, 2'b11};
+      din[9:8] == 2'b11;
     } else if (din_saved == 2'b11) {
       din[9:8] dist {2'b10 := 40, 2'b00 := 60};
     } else {
@@ -69,15 +67,31 @@ class WRAPPER_seq_item extends uvm_sequence_item;
 
   function void post_randomize(); // Happens after randomization
     din_saved = din[9:8];
+    count_ss_n++;
+
     if(count>0) begin
       MOSI = din[count-1];
       count--;
     end
     else begin
       count = 10;
-      
+      //SS_n = 0;
     end
 
+    if(din_saved != 2'b11 && count_ss_n == 12)// Counted from 0->12 (13 cycles)
+      count_ss_n = 0;
+    else if(din_saved == 2'b11 && count_ss_n == 22)// 23 cycles
+      count_ss_n = 0;
+
+    if(count_ss_n == 0 && din_saved != 2'b11) begin
+      SS_n = 0;
+    end
+    else if(count_ss_n == 0 && din_saved == 2'b11) begin
+      SS_n = 0; 
+    end
+    else begin
+      SS_n = 1;
+    end
     //$display("DIN = %b, din_saved = %d", din[9:8], din_saved);
   endfunction
   function void pre_randomize();
