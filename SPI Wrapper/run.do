@@ -1,9 +1,10 @@
 vlib work
-#vlog -f src_files.list +cover -covercells +define+SIM
-vlog -f src_files.list +cover -covercells 
+vlog -f src_files.list +cover -covercells +define+SIM
+#vlog -f src_files.list +cover -covercells 
 
 
 vsim -voptargs=+acc work.top -classdebug -uvmcontrol=all -cover
+
 run 0
 
 add wave -position insertpoint  \
