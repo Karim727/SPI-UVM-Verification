@@ -12,6 +12,8 @@ class RAM_test extends uvm_test;
   `uvm_component_utils(RAM_test)
   RAM_env env;
   RAM_config_obj RAM_cfg;
+
+
   virtual RAM_if RAM_vif;
   RAM_read_only_seq read_only_seq;
   RAM_write_only_seq write_only_seq;
@@ -24,6 +26,8 @@ class RAM_test extends uvm_test;
             super.build_phase(phase);
             env = RAM_env::type_id::create("env",this);
             RAM_cfg = RAM_config_obj::type_id::create("RAM_cfg",this);
+            RAM_cfg.is_active = UVM_ACTIVE;
+
             read_only_seq = RAM_read_only_seq::type_id::create("read_only_seq",this);
             write_only_seq = RAM_write_only_seq::type_id::create("write_only_seq",this);
             write_read_random_seq = RAM_write_read_seq::type_id::create("read_only_seq",this);
@@ -31,7 +35,7 @@ class RAM_test extends uvm_test;
             if(!uvm_config_db #(virtual RAM_if)::get(this,"","RAM_IF",RAM_cfg.RAM_vif))begin
                 `uvm_fatal("bulid_phase","unable to get congiguration object")
             end
-            uvm_config_db #(RAM_config_obj)::set(this,"*","CFG",RAM_cfg);
+            uvm_config_db #(RAM_config_obj)::set(this,"*","CFG_ram",RAM_cfg);
   endfunction
   task run_phase(uvm_phase phase);
   super.run_phase(phase);

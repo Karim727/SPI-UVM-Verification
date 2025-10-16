@@ -20,12 +20,14 @@ class SPI_test extends uvm_test;
             super.build_phase(phase);
             env = SPI_env::type_id::create("env",this);
             SPI_cfg = SPI_config_obj::type_id::create("SPI_cfg",this);
+            SPI_cfg.is_active = UVM_ACTIVE;
+
             main_seq = SPI_main_seq::type_id::create("main_seq",this);
             reset_seq = SPI_reset_seq::type_id::create("reset_seq",this);
             if(!uvm_config_db #(virtual SPI_if)::get(this,"","SPI_IF",SPI_cfg.SPI_vif))begin
                 `uvm_fatal("bulid_phase","unable to get congiguration object")
             end
-            uvm_config_db #(SPI_config_obj)::set(this,"*","CFG",SPI_cfg);
+            uvm_config_db #(SPI_config_obj)::set(this,"*","CFG_spi",SPI_cfg);
   endfunction
   task run_phase(uvm_phase phase);
   super.run_phase(phase);
