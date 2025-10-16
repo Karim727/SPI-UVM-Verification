@@ -9,7 +9,7 @@ class WRAPPER_seq_item extends uvm_sequence_item;
   int count = 0;
   logic MOSI;
   rand logic rst_n;
-  logic MISO;
+  logic MISO, MISO_ref;
   logic SS_n;
   rand logic[10:0] din;
 

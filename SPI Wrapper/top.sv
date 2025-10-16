@@ -66,6 +66,14 @@ module top ();
       .rst_n(WRAPPERif.rst_n)
   );
 
+  wrapper_ref golden_wrapper(
+      .MOSI(WRAPPERif.MOSI),
+      .MISO(WRAPPERif.MISO_ref),
+      .SS_n(WRAPPERif.SS_n),
+      .clk(clk),
+      .rst_n(WRAPPERif.rst_n)
+  );
+
     /////////////////////////////
     // Interface connections //
     /////////////////////////////

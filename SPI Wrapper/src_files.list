@@ -3,7 +3,7 @@
 WRAPPER_shared_pkg.sv
 
 
-
+wrapper_ref.v
 ../RAM/RAM_golden.v
 ../SPI/SPI.v
 

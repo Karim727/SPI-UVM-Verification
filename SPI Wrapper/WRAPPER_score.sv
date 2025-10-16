@@ -36,18 +36,18 @@ package WRAPPER_pkg_score;
 
                 sb_fifo.get(seq_item_sb);
                 //ref_model(seq_item_sb);
-                // if(seq_item_sb.dout_ref != seq_item_sb.dout || seq_item_sb.tx_valid_ref != seq_item_sb.tx_valid) begin
-                //     `uvm_error("run_phase",$sformatf("Comparison failed, transactions recieved by the DUT:%s while the 
-                //     dout_ref = %0b, tx_valid_ref = %0b",seq_item_sb.convert2string_stimulus(),seq_item_sb.dout_ref,seq_item_sb.tx_valid_ref));
-                //     error_count++;
-                // end
-                // else begin
-                //     `uvm_info("run_phase", $sformatf("Correct output:%s",seq_item_sb.convert2string_stimulus()),UVM_HIGH);
-                //     correct_count++;
-                // end
+                if(seq_item_sb.MISO_ref != seq_item_sb.MISO) begin
+                    `uvm_error("run_phase",$sformatf("Comparison failed, transactions recieved by the DUT:%s while the 
+                    MISO_ref = %0b",seq_item_sb.convert2string_stimulus(),seq_item_sb.MISO_ref));
+                    error_count++;
+                end
+                else begin
+                    `uvm_info("run_phase", $sformatf("Correct output:%s",seq_item_sb.convert2string_stimulus()),UVM_HIGH);
+                    correct_count++;
+                end
             end
         endtask
-        
+
         function void report_phase(uvm_phase phase);
             super.report_phase(phase);
             `uvm_info("report_phase",$sformatf("Total successful transactions: %0d",correct_count),UVM_MEDIUM);
